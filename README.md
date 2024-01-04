@@ -16,7 +16,7 @@ You will then get an email containing:
 &nbsp;
 - another file of all the usernames that follow you and the time they followed you
 <br><br>
-NOTE: this data will be displayed with each username on one line and the respective date/ time on a new line. 
+NOTE: this data will be displayed with each username on one line and the respective date/ time on a new line.
 ## post data download steps:
 
 1. From the file that contains data of who you're following, copy its entire contents and paste it into a new text file with a title of your choosing (i.e following.txt).
