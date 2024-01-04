@@ -4,6 +4,7 @@
 #include <algorithm>
 using namespace std;
 
+void appendVector(ifstream& fileName, vector<string>& store, string line);
 int main()
 {
     ifstream followersFile; ifstream followingFile;
@@ -54,32 +55,15 @@ int main()
     }
     cout << endl;
 
-    // odd numbered lines of following and follower txt files are the username. even numbered lines is the date
-
     vector<string> followers;
     vector<string> following;
-    int count = 1;
     string line;
 
-    // first, store all usernames of followers and following into 2 vectors to later compare
-    while (getline(followersFile, line))
-    {
-        if (count % 2 != 0) // odd number, so store the username into the followers vector
-        {
-            followers.push_back(line);
-        }
-        count++;
-    } 
+    // NOTE: odd numbered lines of following and follower txt files are the username. even numbered lines is the date
 
-    count = 1;
-    while (getline(followingFile, line))
-    {
-        if (count % 2 != 0) // odd number, so store the username into the following vector
-        {
-            following.push_back(line);
-        }
-        count++;
-    }
+    // first, store all usernames of followers and following into 2 vectors to later compare
+    appendVector(followersFile, followers, line);
+    appendVector(followingFile, following, line);
     
     int counter = 0; // keep track of iterating thru all following usernames
     int linee=1; // who ur following. should = ur actual "following" number on instagram
@@ -109,3 +93,21 @@ int main()
     }   
     return 0;
 }
+
+void appendVector(ifstream& fileName, vector<string>& store, string line)
+{
+    int count = 1;
+    while (getline(fileName, line))
+    {
+        if (count % 2 != 0) // odd number, so store the username into the followers vector
+        {
+            store.push_back(line);
+        }
+        count++;
+    } 
+}
+/*
+  need to pass fileName by reference bc not having it attempts to copy an ifstream object,
+  but ifstream objects have deleted copy constructors, so they cant be copied.
+  Also, since youre modifying the contents of the vector, pass that by reference, too.
+*/
