@@ -2,6 +2,7 @@
 A simple C++ program that tells you the username(s) of the account(s) that don't follow you back 💀
 <br>  
 ## preliminary steps:
+
 git clone this repository, which is named instagramFollowers. Then,
 1. Log into your account on instagram.com
 2. Navigate to and click on this icon: &nbsp; ![image of the hamburger icon](hamburger.png)
@@ -17,6 +18,7 @@ You will then get an email containing:
 <br><br>
 NOTE: this data will be displayed with each username on one line and the respective date/ time on a new line. 
 ## post data download steps:
+
 1. From the file that contains data of who you're following, copy its entire contents and paste it into a new text file with a title of your choosing (i.e following.txt).
 2. Repeat the above step with the file that contains data of who is following you, pasting its contents into a new text file with a different title (i.e followers.txt)
 <br><br>
