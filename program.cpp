@@ -4,7 +4,13 @@
 #include <algorithm>
 using namespace std;
 
+/* populates the followers and following vectors from reading a file */
 void appendVector(ifstream& fileName, vector<string>& store, string line);
+
+/* if user enters multiple strings for an intended cin >> string variable,
+this function clears the input for the next cin to function correctly at a clean slate */
+void inputValid();
+
 int main()
 {
     ifstream followersFile; ifstream followingFile;
@@ -17,7 +23,9 @@ int main()
     {
         cout << "Enter the name of the text file containing your FOLLOWERS: ";
         cin >> followersInput;
-        if (cin.fail())
+        inputValid();
+
+        if (cin.fail()) // likely won't be entered at all, but no harm in having it
         {
             cout << "Please enter a valid input in the form fileName.txt" << endl;
             continue;
@@ -27,10 +35,7 @@ int main()
         {
             cout << "No file named "<< followersInput <<" exists. Please enter a valid input in the form fileName.txt" << endl << endl;
         }
-        else
-        {
-            doneFollowers = true;
-        }
+        else doneFollowers = true;
     }
 
     bool doneFollowing = false;
@@ -38,7 +43,9 @@ int main()
     {
         cout << "Enter the name of the text file containing who you're FOLLOWING: ";
         cin >> followingInput;
-        if (cin.fail())
+        inputValid();
+
+        if (cin.fail()) // likely won't be entered at all, but no harm in having it
         {
             cout << "Please enter a valid input in the form fileName.txt" << endl;
             continue;
@@ -48,10 +55,7 @@ int main()
         {
             cout << "No file named "<< followingInput <<" exists. Please enter a valid input in the form fileName.txt" << endl << endl;
         }
-        else
-        {
-            doneFollowing = true;
-        }
+        else doneFollowing = true;
     }
     cout << endl;
 
@@ -59,14 +63,12 @@ int main()
     vector<string> following;
     string line;
 
-    // NOTE: odd numbered lines of following and follower txt files are the username. even numbered lines is the date
-
     // first, store all usernames of followers and following into 2 vectors to later compare
     appendVector(followersFile, followers, line);
     appendVector(followingFile, following, line);
     
     int counter = 0; // keep track of iterating thru all following usernames
-    int linee=1; // who ur following. should = ur actual "following" number on instagram
+    int linee=1; // count of who ur following. should equal ur actual "following" number on instagram (USED FOR VALIDATION PURPOSES; can be commented out in final version along w lines 84 & 85)
 
     cout << "RESULTS: " << endl;
     while (following.size() > counter) // iterate thru everyone ur following
@@ -74,13 +76,13 @@ int main()
         string followingUsername = following[counter];
         bool found = false;
         int followersCounter = 0;
-        while (followersCounter < followers.size()) // iterate thru all ur followers to check if person x ur following is a follower
+        while (followersCounter < followers.size()) // iterate thru all ur followers to check if the <username> ur following is also a follower
         {
             if (followingUsername == followers[followersCounter])
             {
                 found = true;
                 // cout << "ur following " << linee << " " << followingUsername << " and " << followers[followersCounter] << " is following back "<< endl;
-                linee++;
+                // linee++;
                 break;
             }
             followersCounter++;
@@ -94,20 +96,29 @@ int main()
     return 0;
 }
 
+
+/*
+  need to pass fileName by reference bc not having it attempts to copy an ifstream object,
+  but ifstream objects have deleted copy constructors, so they cant be copied.
+  Also, since youre modifying the contents of the vector, pass that by reference, too.
+*/
 void appendVector(ifstream& fileName, vector<string>& store, string line)
 {
     int count = 1;
     while (getline(fileName, line))
     {
-        if (count % 2 != 0) // odd number, so store the username into the followers vector
+      // NOTE: odd numbered lines of both the following and follower txt files are the usernames. even numbered lines are the dates. (we want the usernames only)
+        if (count % 2 != 0) // ODD NUMBER, so store the username into the followers vector
         {
             store.push_back(line);
         }
         count++;
     } 
 }
-/*
-  need to pass fileName by reference bc not having it attempts to copy an ifstream object,
-  but ifstream objects have deleted copy constructors, so they cant be copied.
-  Also, since youre modifying the contents of the vector, pass that by reference, too.
-*/
+
+void inputValid()
+{
+    cin.clear();
+    string item;
+    getline(cin, item);
+}

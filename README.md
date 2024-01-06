@@ -1,6 +1,7 @@
 # instagramFollowers
-A simple C++ program that tells you the username(s) of the account(s) that don't follow you back 💀
+A simple C++ command line program that tells you the username(s) of the account(s) that don't follow you back 💀
 <br>  
+features: reading and parsing input from 2 text files, input validation, vectors 
 ## preliminary steps:
 
 git clone this repository, which is named instagramFollowers. Then,
